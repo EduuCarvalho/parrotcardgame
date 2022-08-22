@@ -11,6 +11,14 @@
     margin-bottom: 47px;
     
 }
+.timer  {
+    font-family: "roboto";
+    background-color: rgba(255,255,255, 0.8);
+    position:fixed;
+    right: 20px;
+   top: 20px;
+   font-size: 40px;
+}
 
 .tituloJogo {
     font-family: "roboto";
@@ -22,18 +30,16 @@
     line-height: 66px;
     letter-spacing: -0.004em;
     color: #75B79E;
-    border:solid rgb(144, 50, 50);
     margin-top: 40px;
     margin-bottom: 17px;
     box-sizing: border-box;  
 }
 
 .tabuleiro{
-    background-color: aqua;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    width: 50vw;
+    width: 60vw;
 }
 .carta {
     
@@ -89,4 +95,14 @@
 
 .cartaCerta{
     display: flex;
+}
+
+@media (max-width:600px){
+    .tituloJogo {
+        font-size: 36px;
+        width: 312px;
+        line-height: 42.19px;
+        text-align: center;
+    
+}
 }

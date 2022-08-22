@@ -13,7 +13,7 @@
   
 //puxar classe tabuleiro pra uma const
 const tabuleiro = document.querySelector('.tabuleiro');
-
+const timer = document.querySelector('.timer');
 
 //Criar Array contendo todos os tipos de cartas(figuras)
 const tiposDeCartas = [
@@ -28,6 +28,7 @@ const tiposDeCartas = [
 
 // fução que cria divs para cada carta que entrar no jogo
 const criarElemento = (tag, classeCarta) => {
+
     const elemento = document.createElement(tag);
     elemento.className = classeCarta;
     return elemento;
@@ -48,7 +49,8 @@ const verificarPares = () => {
            
             primeiraCarta = '';
             segundaCarta = '';
-
+            cartasCertas++;
+            numeroDeClicks++;
         checarFimDoJogo();
 
     } else { 
@@ -61,15 +63,23 @@ const verificarPares = () => {
             segundaCarta = '';
         },1000)
 
-        
+            numeroDeClicks++;
         }
 }
+let numeroDeClicks = 0;
+let cartasCertas = 0;
+
 //Verificar fim do jogo.
 const checarFimDoJogo = () =>{
-    let cartasCertas = document.querySelectorAll('.cartaCerta')
-    if (cartasCertas.lenght === 2){
-        alert('Você ganhou em X jogadas!');
-    }
+    
+    
+    if (cartasCertas === entradaDeCartas/2){
+        clearInterval(this.loop);
+       alert (`Você ganhou em ${(numeroDeClicks*2)} jogadas!Seu tempo foi ${timer.innerHTML} segundos. Deseja jogar novamente?`);
+           
+        }
+      
+    
 }
 
 
@@ -96,7 +106,7 @@ const revelarCarta = ({target}) =>{
 
 
 //função que atribui classes para as cartas criadas
-const criarCarta = (figura) => {
+    const criarCarta = (figura) => {
     const carta = criarElemento('div', 'carta');
     const frente = criarElemento ('div', 'face frente')
     const costas = criarElemento ('div', 'face costas');
@@ -115,10 +125,20 @@ const criarCarta = (figura) => {
 
 }
 
+
+let entradaDeCartas;
+
 //função que carrega o jogo, duplica a array para gerar os pares, embaralha de forma aleatória
 function loadGame () {
+    entradaDeCartas=prompt("Selecione um número de cartas entre 4 e 14!!!");
+    while (entradaDeCartas%2!==0 || entradaDeCartas<4 || entradaDeCartas>14){
+    entradaDeCartas=prompt("Favor selecionar um número par entre 4 e 14. Com quantas cartas você quer jogar?")
 
-    const duplicarFigura = [...tiposDeCartas,...tiposDeCartas];
+}
+
+let primeiraFiguras = tiposDeCartas.slice(0,(entradaDeCartas/2));
+let segundaFiguras = tiposDeCartas.slice(0,(entradaDeCartas/2));
+let duplicarFigura = [...primeiraFiguras,...segundaFiguras];
 
     const embaralharArray = duplicarFigura.sort(() => Math.random()-0.5);
 
@@ -129,12 +149,22 @@ function loadGame () {
         tabuleiro.appendChild(carta);
 
     })
+    
+}
+const comecarTempo = () =>{
+
+    this.loop = setInterval(()=>{
+        const tempoAtual= Number(timer.innerHTML);
+        timer.innerHTML = tempoAtual +1;
+    },1000);
+    
+}
+//rodas função com todas as cartas criadas, dobradas e de forma aleatória
+window.onload = () =>{
+    comecarTempo();
+    loadGame();
 
 }
-
-//rodas função com todas as cartas criadas, dobradas e de forma aleatória
-loadGame();
-
 
 
 
